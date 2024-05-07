@@ -31,10 +31,9 @@ function inputElement(id: string): HTMLInputElement {
 function newplayername(): string {
   return inputElement('newplayer-name').value;
 }
-function addPlayer() {
+function addPlayer(gender: Gender) {
   let newplayer_el = inputElement('newplayer-name');
   let name = newplayer_el.value;
-  let gender = (document.querySelector('input[name="gender"]:checked') as HTMLInputElement).value as Gender;
   if (name) {
     board.players.push({
       name, gender
@@ -120,7 +119,8 @@ function render() {
 
   let players_el = document.getElementById('player-list');
   if (players_el) {
-    players_el.innerHTML = `Players: ${board.players.length}`;
+    let recteamnum = Math.ceil(board.players.length / 5);
+    players_el.innerHTML = `Players: ${board.players.length} (recommend ${recteamnum} teams)`;
   }
   board.players.forEach((player, i) => {
     let el = document.createElement('div')
@@ -174,11 +174,11 @@ function load() {
 }
 function start() {
   load();
-  let newplayer_form = document.getElementById('newplayer-form') as HTMLFormElement
-  newplayer_form.addEventListener('submit', (ev) => {
-    ev.preventDefault();
-    addPlayer();
-    return false;
+  document.getElementById('addboy')?.addEventListener('click', (ev) => {
+    addPlayer('M')
+  })
+  document.getElementById('addgirl')?.addEventListener('click', (ev) => {
+    addPlayer('F')
   })
   document.getElementById('shuffle-btn')?.addEventListener('click', () => {
     shuffle(board.players);

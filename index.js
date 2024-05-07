@@ -17,10 +17,9 @@ function inputElement(id) {
 function newplayername() {
     return inputElement('newplayer-name').value;
 }
-function addPlayer() {
+function addPlayer(gender) {
     let newplayer_el = inputElement('newplayer-name');
     let name = newplayer_el.value;
-    let gender = document.querySelector('input[name="gender"]:checked').value;
     if (name) {
         board.players.push({
             name, gender
@@ -106,7 +105,8 @@ function render() {
     }
     let players_el = document.getElementById('player-list');
     if (players_el) {
-        players_el.innerHTML = `Players: ${board.players.length}`;
+        let recteamnum = Math.ceil(board.players.length / 5);
+        players_el.innerHTML = `Players: ${board.players.length} (recommend ${recteamnum} teams)`;
     }
     board.players.forEach((player, i) => {
         let el = document.createElement('div');
@@ -160,24 +160,24 @@ function load() {
     }
 }
 function start() {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e;
     load();
-    let newplayer_form = document.getElementById('newplayer-form');
-    newplayer_form.addEventListener('submit', (ev) => {
-        ev.preventDefault();
-        addPlayer();
-        return false;
+    (_a = document.getElementById('addboy')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (ev) => {
+        addPlayer('M');
     });
-    (_a = document.getElementById('shuffle-btn')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+    (_b = document.getElementById('addgirl')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', (ev) => {
+        addPlayer('F');
+    });
+    (_c = document.getElementById('shuffle-btn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => {
         shuffle(board.players);
         render();
     });
-    (_b = document.getElementById('reset-btn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
+    (_d = document.getElementById('reset-btn')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', () => {
         if (confirm("Reset for sure?")) {
             reset();
         }
     });
-    (_c = document.getElementById('numteams')) === null || _c === void 0 ? void 0 : _c.addEventListener('input', () => {
+    (_e = document.getElementById('numteams')) === null || _e === void 0 ? void 0 : _e.addEventListener('input', () => {
         board.numteams = Number(inputElement('numteams').value || '5');
         if (board.numteams < 2) {
             board.numteams = 2;

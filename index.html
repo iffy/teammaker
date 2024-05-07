@@ -4,23 +4,35 @@
     <title>Team Maker</title>
     <style>
       .team {
-        margin-top: 1em;
-        margin-bottom: .5em;
+        margin: 1em;
+        border: 1px solid lightgrey;
+        padding: 1em;
+      }
+      input[type="text"] {
+        font-size: 2em;
+      }
+      button {
+        font-size: 2em;
+        margin: .5em;
+      }
+      .player {
+        padding: .5rem;
+        margin: .5rem;
+      }
+      #team-list {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
       }
     </style>
   </head>
   <body>
     <fieldset>
       <legend>New player</legend>
-      <form id="newplayer-form">
       Name: <input type="text" id="newplayer-name" />
       <div>
-      Gender:
-        <label><input type="radio" id="newplayer-male" name="gender" value="M" checked/> Male</label>
-        <label><input type="radio" id="newplayer-female" name="gender" value="F" /> Female</label>
-      </div>
-      <button>Add</button>
-      </form>
+      <button id="addboy">Add Boy</button>
+      <button id="addgirl" style="margin-left: 2em;">Add Girl</button>
     </fieldset>
     
     <div id="app">
