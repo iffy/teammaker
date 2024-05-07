@@ -4,8 +4,13 @@ let board = {
     teams: [],
     numteams: 5,
 };
-function smallestTeam() {
-    let teams = [...board.teams];
+function sortBySmallest(teams) {
+    teams.sort((a, b) => {
+        return a.players.length - b.players.length;
+    });
+}
+function smallestTeam(srcteams) {
+    let teams = [...srcteams];
     teams.sort((a, b) => {
         return a.players.length - b.players.length;
     });
@@ -32,19 +37,27 @@ function addPlayer(gender) {
     newplayer_el.focus();
 }
 function addAtLeast2(src) {
-    let i = 0;
-    for (let i = 0; i < board.teams.length; i++) {
+    let teams = [...board.teams];
+    let last_team = null;
+    while (teams.length > 0) {
+        sortBySmallest(teams);
+        let smallest = teams.shift();
+        if (!smallest) {
+            break;
+        }
+        if (!last_team) {
+            last_team = smallest;
+        }
         if (src.length >= 2) {
             let player1 = src.shift();
             let player2 = src.shift();
-            board.teams[i].players.push(player1);
-            board.teams[i].players.push(player2);
+            smallest.players.push(player1);
+            smallest.players.push(player2);
         }
         else if (src.length > 0) {
-            // Only one girl left, put her in the last group
-            let idx = i === 0 ? 0 : i - 1;
+            // Only one left, put her in the last group
             let player1 = src.shift();
-            board.teams[idx].players.push(player1);
+            last_team.players.push(player1);
         }
     }
     return src;
@@ -73,7 +86,7 @@ function makeTeams() {
     remaining = [...girls, ...boys];
     while (remaining.length > 0) {
         let person = remaining.shift();
-        let team = smallestTeam();
+        let team = smallestTeam(board.teams);
         if (!team) {
             break;
         }
