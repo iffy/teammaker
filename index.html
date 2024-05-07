@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>Team Maker</title>
+    <style>
+      .team {
+        margin-top: 1em;
+        margin-bottom: .5em;
+      }
+    </style>
+  </head>
+  <body>
+    <fieldset>
+      <legend>New player</legend>
+      <form id="newplayer-form">
+      Name: <input type="text" id="newplayer-name" />
+      <div>
+      Gender:
+        <label><input type="radio" id="newplayer-male" name="gender" value="M" checked/> Male</label>
+        <label><input type="radio" id="newplayer-female" name="gender" value="F" /> Female</label>
+      </div>
+      <button>Add</button>
+      </form>
+    </fieldset>
+    
+    <div id="app">
+
+    </div>
+    <button id="shuffle-btn">Shuffle</button>
+    <h2>Players</h2>
+    <div id="player-list"></div>
+    <h2>Teams</h2>
+    Number of teams: <input type="text" id="numteams" value="5">
+    <div id="team-list"></div>
+    <hr/>
+    <details>
+      <summary>More</summary>
+      <pre id="debug"></pre>
+      <button id="reset-btn">Reset</button>
+    </details>
+    <script src="./index.js"></script>
+    <script>
+      start();
+    </script>
+  </body>
+</html>
